@@ -57,16 +57,79 @@ function promiseCook(foodName , time) {
   // asyncFn();
 
   // 如果要捕捉錯誤的話
+  // async function asyncFn() {
+  //   try {
+  //     const res1 = await promiseCook('來一客' , 3);
+  //     console.log(res1); // resolve
+  //     const res2 = await promiseCook('來兩客' , 2);
+  //     console.log(res2); // resolve
+  //   } catch(err) {
+  //     console.log(err)
+  //   }
+  // }
+  // console.log(asyncFn())
+  // asyncFn();
+  // console.log(asyncFn)
+
+
+// Promise.all()
+// 有時候我們可能會想同時享用多碗泡麵，這時候就需要使用複數個爐台，這個複數爐台就是 Promise.all()，其背後操作則是使用陣列將多個 promise 函式打包，當全部執行完成後回傳陣列結果，而陣列的結果順序與一開始傳入的一樣。 但是一旦有 Promise 物件失敗，將回傳失敗那個物件回傳的結果，如果是全部失敗，則回傳第一個 Promise 物件的失敗結果，來當成整個最後的錯誤訊息。
+// Promise.all([ promiseCook('來一客' , 3),
+//               promiseCook('雙響砲' , 4),
+//               promiseCook('滿漢大餐' , 6)
+//             ])
+// .then((res) => {
+//   console.log(res)
+// })
+// .catch((err) => {
+//   console.log(err)
+// })
+
+// 改寫
+  // async function asyncFnAll() {
+  //   try {
+  //     const res = await Promise.all([ promiseCook('來一客' , 3),
+  //     promiseCook('雙響砲' , 2),
+  //     promiseCook('滿漢大餐' , 5)
+  //   ])
+  //     console.log(res); // resolve
+  //   } catch(err) {
+  //     console.log(err)
+  //   }
+  // }
+  // asyncFnAll();
+
+
+
+
+
+  // 4.撰寫可用性高的錯誤捕捉
+  // 
   async function asyncFn() {
-    try {
-      const res1 = await promiseCook('來一客' , 3);
-      console.log(res1); // resolve
-      const res2 = await promiseCook('來兩客' , 2);
-      console.log(res2); // resolve
-    } catch(err) {
-      console.log(err)
-    }
+    const res1 = await promiseCook('來一客' , 3);
+    console.log(res1); // resolve
+    const res2 = await promiseCook('來兩客' , 5);
+    console.log(res2); // resolve
+    const res3 = await promiseCook('來三客' , 2);
+    console.log(res3); // resolve
   }
-  console.log(asyncFn())
-  asyncFn();
-  console.log(asyncFn)
+
+  const catchError = (asFn) => {
+    return asFn.catch((error) => {
+      console.log('error', error);
+    })
+  }
+  
+  catchError(asyncFn())
+
+
+  
+  // 拿作品的API來寫看看
+  async function asyncFnAll() {
+    const res1 = await promiseCook('來一客' , 3);
+    console.log(res1); // resolve
+    const res2 = await promiseCook('來兩客' , 5);
+    console.log(res2); // resolve
+    const res3 = await promiseCook('來三客' , 2);
+    console.log(res3); // resolve
+  }
