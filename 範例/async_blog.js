@@ -115,21 +115,33 @@ function promiseCook(foodName , time) {
   }
 
   const catchError = (asFn) => {
-    return asFn.catch((error) => {
-      console.log('error', error);
+    return asFn.catch((err) => {
+      console.log(err);
     })
   }
   
   catchError(asyncFn())
 
 
-  
+
   // 拿作品的API來寫看看
-  async function asyncFnAll() {
-    const res1 = await promiseCook('來一客' , 3);
-    console.log(res1); // resolve
-    const res2 = await promiseCook('來兩客' , 5);
-    console.log(res2); // resolve
-    const res3 = await promiseCook('來三客' , 2);
-    console.log(res3); // resolve
-  }
+  async function getAllOrders () {
+      let allOrders = []
+      let revenue = 0
+      let ordersNum = 0
+      for (let i = 0; i <= 6; i++) {
+        const url = `https://vue3-course-api.hexschool.io/api/kelvinlin9/admin/orders?page=${i}`
+        await axios
+          .get(url)
+          .then((res) => {
+            console.log(res)
+            // res.data.orders.forEach((order) => {
+            //   this.allOrders.push(order)
+            //   this.ordersNum += 1
+            //   this.revenue += order.total
+            // })
+          })
+          .catch((err) => console.error(err))
+      }
+    }
+    getAllOrders ()
