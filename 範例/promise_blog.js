@@ -72,7 +72,6 @@ function promiseCook(foodName , time) {
     }
   })
 }
-
 // console.dir(promiseCook())
 // console.log(promiseCook('來一客' , 6))
 // 隨機產生時間
@@ -148,13 +147,13 @@ const cookTime = parseInt(Math.random() * 7) // 隨機帶入分鐘
 // })
 
 // race 和 all 不同的是只要有一個 Promise 物件回傳結果，不論成功或失敗，都會結束該次 Promise.race() 呼叫。
-Promise.race([ promiseCook('來一客' , 5),
-              promiseCook('雙響砲' , 4),
-              promiseCook('滿漢大餐' , 6)
-            ])
-.then((res) => {
-  console.log(res)
-})
-.catch((err) => {
-  console.log(err)
-})
+// Promise.race([ promiseCook('來一客' , 5),
+//               promiseCook('雙響砲' , 4),
+//               promiseCook('滿漢大餐' , 6)
+//             ])
+// .then((res) => {
+//   console.log(res)
+// })
+// .catch((err) => {
+//   console.log(err)
+// })
