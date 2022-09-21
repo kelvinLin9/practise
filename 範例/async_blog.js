@@ -166,29 +166,29 @@ function promiseCook(foodName , time) {
 
 
   // catch分開寫呢
-  async function getAllOrders () {
-    let allOrders = []
-    let revenue = 0
-    let ordersNum = 0
-    for (let i = 0; i <= 6; i++) {
-      const url = `https://vue3-course-api.hexschool.io/api/kelvinlin9/admin/orders?page=${i}`
-      const res = await axios.get(url)
-      console.log(res)
-      // res.data.orders.forEach((order) => {
-      //   this.allOrders.push(order)
-      //   this.ordersNum += 1
-      //   this.revenue += order.total
-      // })
-    }
-  }
+  // async function getAllOrders () {
+  //   let allOrders = []
+  //   let revenue = 0
+  //   let ordersNum = 0
+  //   for (let i = 0; i <= 6; i++) {
+  //     const url = `https://vue3-course-api.hexschool.io/api/kelvinlin9/admin/orders?page=${i}`
+  //     const res = await axios.get(url)
+  //     console.log(res)
+  //     // res.data.orders.forEach((order) => {
+  //     //   this.allOrders.push(order)
+  //     //   this.ordersNum += 1
+  //     //   this.revenue += order.total
+  //     // })
+  //   }
+  // }
 
-  const catchError = (asFn) => {
-    return asFn.catch((err) => {
-      console.log(err);
-    })
-  }
+  // const catchError = (asFn) => {
+  //   return asFn.catch((err) => {
+  //     console.log(err);
+  //   })
+  // }
   
-  catchError(getAllOrders ())
+  // catchError(getAllOrders ())
 
 
 // ------------------------------------------------------
@@ -196,9 +196,74 @@ function promiseCook(foodName , time) {
 
 
 
+// 六角的類似範例
+// 1. 把參數改成寫在最外面
+// async function asyncFn(foodName , time) {
+//   const res = await promiseCook(foodName , time);
+//   console.log(res);
+//   }
+// catch 部分拉出來寫
+// const catchError = (asFn) => {
+//   return asFn.catch((err) => {
+//     console.log(err);
+//   })
+// }
+
+// 這樣寫會變成速度快的先跑完
+// catchError(asyncFn('來一客' , 3))
+// catchError(asyncFn('來兩客' , 2))
+// catchError(asyncFn('來三客' , 5))
+
+// 如果想用forEach去跑
+// 這樣寫會出錯，當前的async function還未被調用
+// [{name:'來一客' , min:3}, {name:'來兩客' , min:2}, {name:'來三客' , min:5}]
+// .forEach(catchError(async (foodName , time) => {
+//   const res = await promiseCook(foodName , time);
+//   console.log(res);
+// }))
+
+
+// 2. 第二種寫法，所傳入的async function還未被調用
+
+// const catchError = (asFn) => {
+//   return (foodName , time) => {
+//     console.log('catchError', foodName , time)
+//     return asFn(foodName , time).catch((err) => {
+//       console.log(err);
+//     })
+//   }
+// }
+// [{name:'來一客' , min:3}, {name:'來兩客' , min:2}, {name:'來三客' , min:5}]
+// .forEach(catchError(async (item) => {
+//   console.log(item);
+//   const res = await promiseCook(item.name , item.min);
+//   console.log(res);
+// }))
 
 
 
+
+
+
+
+
+
+
+// 整個架構
+// 1. 定義自己的promise
+// 2. 寫async / await
+// 3. catch拉出來另外寫且執行
+
+
+
+
+// const catchError = (asFn) => {
+//   return (n) => {
+//     return asFn(n).catch((error) => {
+//       console.log('error', error);
+//     })
+//   }
+// }
 
 
 
@@ -210,6 +275,35 @@ function promiseCook(foodName , time) {
 
 
 // ray 助教的範例 (先拿自己的改看看吧)
+function promiseFn (boolean) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if(boolean) {
+        resolve('resolve');
+      } else {
+        reject('reject')
+      }
+    }, 1000)
+  })
+}
+
+const catchError = (asFn) => {
+  return (n) => {
+    console.log('catchError參數', n)
+    return asFn(n).catch((error) => {
+      console.log('error:', error);
+    })
+  }
+}
+
+const asyncFn = async (n) => {
+  const res = await promiseFn(n)
+  console.log(res)
+}
+
+catchError(asyncFn)(0)
+
+
 // [1, 2].forEach(catchError(async (n) => {
 //   await axios.get(`https://jsonplaceholder.typicode.com/todos/${n}`)
 // }))
@@ -222,11 +316,5 @@ function promiseCook(foodName , time) {
 // }
 
 // 改寫
-// const catchError = (asFn) => {
-//   return (n) => {
-//     return asFn(n).catch((error) => {
-//       console.log('error', error);
-//     })
-//   }
-// }
-// catchError(asyncFn());
+
+
