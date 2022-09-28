@@ -28,11 +28,12 @@
 // console.log('C:', myName); 
 
 
-var myName = 'kelvin';
-console.log('A:', myName); 
-{
-  let myName = 'kelvin2';
-  console.log('B:', myName); 
-}
+// var myName = 'kelvin';
+// console.log('A:', myName); 
+// {
+//   let myName = 'kelvin2';
+//   console.log('B:', myName); 
+// }
 
-console.log('C:', myName); 
+// console.log('C:', myName); 
+
