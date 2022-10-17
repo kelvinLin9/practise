@@ -16,9 +16,9 @@ function addTodo(){
     };
     //防呆
     if(todo.txt !== ''){
-         todoData.unshift(todo);
+        todoData.unshift(todo);
         //  console.log(todoData)
-         inputText.value = '';//輸入框清空
+        inputText.value = '';//輸入框清空
     }
     updateList();
 }
