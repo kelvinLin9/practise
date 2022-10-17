@@ -2,21 +2,31 @@ const txt = document.querySelector('.text')
 const list = document.querySelector('.list')
 const add = document.querySelector('.btn_add')
 const tab = document.querySelector('.tab')
+const inputTodo = document.querySelector('.input')
 
 data = []
 
 // 新增事件
-add.addEventListener('click', (e) => { 
+add.addEventListener('click', addTodo)
+inputTodo.addEventListener('keyup',(e)=>{
+  if(e.key == 'Enter'){
+    addTodo()
+  }
+})
+function addTodo(){
   obj = {
     value : txt.value,
     id : new Date().getTime(),
-    down: false
+    checked: ''
   }
   data.push(obj)
   console.log(data)
   renderData()
   txt.value = ''
-})
+}
+
+
+
 
 // 渲染
 function renderData(state = 'all') {
@@ -24,13 +34,11 @@ function renderData(state = 'all') {
     newData = data
   } else if (state == 'work'){
     newData = data.filter(function(item){
-      console.log('state',state)
-      return item.down == false
+      return item.checked == ''
     })
   } else {
     newData = data.filter(function(item){
-      console.log('state',state)
-      return item.down == true
+      return item.checked == 'checked'
     })
   }
   console.log('newData',newData)
@@ -39,7 +47,7 @@ function renderData(state = 'all') {
     str += `
       <li>
         <label class="checkbox" for="" >
-          <input type="checkbox" data-id="${item.id}" checked/>
+          <input type="checkbox" data-id="${item.id}" ${item.checked}/>
           <span>${item.value}</span>
         </label>
         <a href="#" class="delete" data-id="${item.id}"></a>
@@ -52,15 +60,14 @@ function renderData(state = 'all') {
 
 // 改變工作完成狀態
 list.addEventListener('click', function(e) {
-  id = e.target.getAttribute("data-id")
+  id = e.target.getAttribute("data-id") 
   data.forEach((item) =>{
-    if(item.id == id) {
-      item.down = !item.down
-      e.target.setAttribute("checked", !e.target.getAttribute('checked'))
-      console.log(e.target.getAttribute("checked"))
-    }
+    if(e.target.classList.value == 'delete') {
+      e.preventDefault();
+      data = data.filter(item => item.id != id);   
+    } 
   })
-  console.log(data)
+  renderData()
 })
 
 // 切換顯示畫面
