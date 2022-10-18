@@ -5,7 +5,7 @@ const btnAdd = document.querySelector('.btn_add')
 const btnClear = document.querySelector('.btn_clear')
 const todoLength = document.querySelector('.todoLength')
 data = []
-
+showData = []
 // 新增
 btnAdd.addEventListener('click', addTodo)
 txt.addEventListener('keyup', (e) => {
@@ -14,7 +14,6 @@ txt.addEventListener('keyup', (e) => {
   }
 })
 function addTodo() {
-  console.log(txt.value)
   if (txt.value == ''){
     alert('請輸入代辦事項')
     return
@@ -30,20 +29,32 @@ function addTodo() {
 }
 
 // 渲染
-function renderData() {
+function renderData(updateData) {
   let str = ''
   let count = 0
+  if (updateData){
+    showData = updateData
+  } else{
+    showData = data
+  }
   data.forEach((i) => {
     if (i.checked == ''){
       count ++
     }
+  })
+  showData.forEach((i) => {
     str += `
       <li>
         <label class="checkbox" for="">
           <input type="checkbox" ${i.checked} data-id="${i.id}"/>
           <span>${i.value}</span>
         </label>
-        <a href="#" class="delete" data-id="${i.id}"></a>
+        <a href="#" class="edit">
+          <i class="fa-solid fa-pen" data-id="${i.id}"></i>
+        </a>
+        <a href="#" class="delete">
+          <i class="fa-solid fa-trash" data-id="${i.id}"></i>
+        </a>
       </li>
     `
   })
@@ -51,13 +62,19 @@ function renderData() {
   todoLength.innerHTML = count
 }
 
-// 切換待辦是否完成&刪除
+// 切換待辦是否完成&編輯&刪除
 list.addEventListener('click', (e) => {
   // 如果只有a標籤裡面有data-id屬性，點input區塊就拿不到屬性值
   let id = e.target.getAttribute('data-id')
-  console.log(e.target.nodeName)
-  if(e.target.nodeName == 'A') {
+  if(e.target.classList.value == 'fa-solid fa-trash') {
     data = data.filter(i => i.id != id)
+  }else if (e.target.classList.value == 'fa-solid fa-pen') {
+    newValue = prompt('編輯吧!少年!!')
+    data.forEach((item,index) => {
+      if (item.id == id) {
+        data[index].value = newValue
+      }
+    })
   }else if(e.target.nodeName == 'INPUT') {
     data.forEach((item,index) => {
       if (item.id == id) {
@@ -78,17 +95,18 @@ btnClear.addEventListener('click', () =>{
   renderData()
 })
 
-// 切換狀態頁面
+// tab切換
 tab.addEventListener('click', (e) =>{
-  let newData = []
-  console.log(e.target.getAttribute('data-tab'))
+  let updateData = []
   if(e.target.getAttribute('data-tab') == 'all'){
-    newData = data
+    updateData = data
   }else if (e.target.getAttribute('data-tab') == 'work'){
-    newData = data.filter(i => i.checked == '')
+    updateData = data.filter(i => i.checked == '')
   } else {
-    newData = data.filter(i => i.checked == 'checked')
+    updateData = data.filter(i => i.checked == 'checked')
   }
-  console.log(newData)
-  renderData()
+  renderData(updateData)
 })
+
+
+
