@@ -98,6 +98,11 @@ btnClear.addEventListener('click', () =>{
 // tab切換
 tab.addEventListener('click', (e) =>{
   let updateData = []
+  const tabs = document.querySelectorAll('.tab li')
+  tabs.forEach((i) => {
+    i.classList.remove('active')
+  })
+  e.target.classList.add('active')
   if(e.target.getAttribute('data-tab') == 'all'){
     updateData = data
   }else if (e.target.getAttribute('data-tab') == 'work'){
