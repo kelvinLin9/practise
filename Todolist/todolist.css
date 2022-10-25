@@ -1,257 +1,167 @@
-@import url("https://fonts.googleapis.com/earlyaccess/notosanstc.css");
-@import url("https://fonts.googleapis.com/css?family=Baloo+Tamma+2:600, 700");
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
-html {
-  font-size: 16px;
-  -webkit-tap-highlight-color: transparent;
-}
-
-body {
-  min-height: 100vh;
-  background: #eee;
-  display: flex;
-  color: #333;
-  background-image: linear-gradient(174deg, #ffd370 2%, #ffd370 46%, #ffffff 46%, #ffffff 100%, #e8e8e8 100%);
-  letter-spacing: 0.07em;
-}
-
-h1 {
-  text-align: center;
-  font-size: 3rem;
-  margin-bottom: 1.5rem;
-  font-family: "Baloo Tamma 2";
-  letter-spacing: 0.5rem;
-  font-weight: bold;
-}
-@media (max-width: 575px) {
-  h1 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-  }
-}
-
-.container {
-  margin: 3rem auto 1.5rem auto;
-  padding: 0 12px;
-  width: 500px;
-}
-@media (max-width: 575px) {
-  .container {
-    margin-top: 1.5rem;
-  }
-}
-
-.card {
-  margin-bottom: 0.5rem;
+img {
   max-width: 100%;
-  padding: 1rem;
-  border-radius: 10px;
+  height: auto;
+}
+.inline-flex {
+  display: inline-flex;
+}
+body {
+  background: url(https://hexschool.github.io/js-filter/assets/bg.jpg);
+  background-size: cover;
+  height: 100vh;
+  font-family: "NotoSansCJKtc-Bold";
+  color: #2a2a2a;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+.wrap {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+.logo a {
+  display: block;
+  background: url(https://firebasestorage.googleapis.com/v0/b/hexschool-courses.appspot.com/o/course%2FJS%20%E5%89%8D%E7%AB%AF%E4%BF%AE%E7%B7%B4%E5%85%A8%E6%94%BB%E7%95%A5%2F1628942714013-logo%20%E6%94%B9.png?alt=media&token=583e78ed-6a6c-4660-9f0e-2f59f8eb78e2)
+    no-repeat;
+  width: 450px;
+  height: 105px;
+  text-indent: 101%;
+  overflow: hidden;
+  cursor: pointer;
+}
+@media (max-width: 767px) {
+  .logo a {
+    background: url(https://firebasestorage.googleapis.com/v0/b/hexschool-courses.appspot.com/o/course%2FJS%20%E5%89%8D%E7%AB%AF%E4%BF%AE%E7%B7%B4%E5%85%A8%E6%94%BB%E7%95%A5%2F1629001163643-logo-sm.png?alt=media&token=914f40fc-c143-4aaa-a1c3-fb0bdd17fa9c)
+      no-repeat;
+    width: 178px;
+    height: 50px;
+    margin: 1.25rem auto;
+  }
+}
+.main {
   background: #fff;
-  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.15);
+  border: 5px solid #fff8d45a;
+  padding: 2.5rem;
 }
-
-input[type=text] {
-  width: 100%;
-  border: 0;
-  outline: 0;
-  font-size: 1rem;
-  padding-right: 1rem;
-  color: #333;
-}
-input[type=text]::placeholder {
-  color: #9f9a91;
-}
-
-.input {
-  padding: 4px 4px 4px 1rem;
-  display: flex;
-}
-
-.btn_add {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  background: #333;
-  color: #fff;
-  font-size: 2rem;
-  text-decoration: none;
-}
-
-.card_list {
-  padding: 0;
-}
-
-.tab {
-  display: flex;
-  text-align: center;
-  color: #9f9a91;
-  font-size: 14px;
-}
-.tab li {
-  padding: 1rem;
-  width: 100%;
-  border-bottom: 2px solid #efefef;
-}
-.tab li.active {
-  border-bottom: 2px solid #333;
-  color: #333;
-  font-weight: bold;
-}
-
-.cart_content {
-  padding: 0.5rem 1rem 1rem 1rem;
-}
-@media (max-width: 575px) {
-  .cart_content {
-    padding: 0.5rem 1rem 0.5rem 0.5rem;
+@media (max-width: 767px) {
+  .main {
+    padding: 0.75rem;
   }
 }
+.btn-type {
+  padding: 0.5rem 2.5rem;
+  color: #2a2a2a;
+  letter-spacing: 1px;
+  margin: 0 0.625rem 1.25rem 0;
+}
+.btn-type:hover,
+.btn-type:active {
+  background: #f8d45a;
+}
+@media (max-width: 767px) {
+  .btn-type {
+    padding: 0.5rem 2.25rem;
+    margin: 0 0.375rem 1rem 0;
+  }
+}
+.seach-group {
+  white-space: nowrap;
+  margin-bottom: 2.5rem;
+  width: 100%;
+}
+.date-input,
+.crop-input {
+  width: 40.625%;
+}
 
-.list li {
+.date-input label,
+.crop-input label {
+  background: #899e39;
+  padding: 0.5rem 1rem;
+  width: 27.5%;
+}
+.date-input input,
+.crop-input input {
+  width: 80%;
+  border: 2px #899e39 solid;
+  padding: 0.375rem;
+  margin-left: -0.3125rem;
+}
+.search {
+  width: 16.39%;
+  background: #899e39;
+  padding: 0.5rem 3.375rem;
+}
+@media (max-width: 767px) {
+  .seach-group {
+    margin-bottom: 1.5rem;
+  }
+  .date-input,
+  .crop-input {
+    width: 100%;
+  }
+  .search {
+    width: 100%;
+  }
+}
+.sort-select {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background: url('data:image/svg+xml;utf8,<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sort-down" class="svg-inline--fa fa-sort-down fa-w-2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="10 0 320 900"><path fill="currentColor" d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41z"></path></svg>')
+    no-repeat;
+  background-position: 105px 5px;
+}
+
+.show-result {
+  font-size: 18px;
+  letter-spacing: 1.12px;
+}
+.sort-content {
+  margin-bottom: 1.25rem;
+}
+.market thead {
+  background: #f4f1ea;
+  border-top: 2px solid #2a2a2a;
+  border-bottom: 2px solid #2a2a2a;
+}
+.market tbody {
+  border-bottom: 2px solid #d9d9d9;
+}
+@media (max-width: 480px) {
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+@media (max-width: 767px) {
+  .mobile-select {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background: url('data:image/svg+xml;utf8,<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sort-down" class="svg-inline--fa fa-sort-down fa-w-2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="10 0 320 800"><path fill="currentColor" d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41z"></path></svg>')
+      no-repeat;
+    background-position: 60px 3px;
+  }
+}
+.sort-advanced {
   position: relative;
-  padding-right: 2rem;
 }
-@media (max-width: 575px) {
-  .list li {
-    padding-right: 0;
-  }
-}
-.list li a.delete {
+.fa-caret-up,
+.fa-caret-down {
   position: absolute;
-  opacity: 0;
-  right: 0;
-  top: 40%;
-  transform: translateY(-50%);
-  text-decoration: none;
-  color: #333;
-  display: block;
-  width: 1rem;
-  height: 1rem;
 }
-@media (max-width: 575px) {
-  .list li a.delete {
-    opacity: 1;
-    width: 12px;
-    height: 12px;
-  }
+.fa-caret-up {
+  top: -2px;
+  right: -15px;
 }
-.list li:hover a.delete {
-  opacity: 1;
-}
-
-.list li a.edit {
-  position: absolute;
-  opacity: 0;
-  right: 30px;
-  top: 30%;
-  /* transform: translateY(-50%); */
-  text-decoration: none;
-  color: #333;
-  display: block;
-  width: 1rem;
-  height: 1rem;
-}
-@media (max-width: 575px) {
-  .list li a.edit {
-    opacity: 1;
-    width: 12px;
-    height: 12px;
-  }
-}
-.list li:hover a.edit {
-  opacity: 1;
-}
-
-.list_footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.5rem 2rem 1rem 0.5rem;
-  font-size: 14px;
-}
-.list_footer a {
-  color: #9f9a91;
-  text-decoration: none;
-}
-@media (max-width: 575px) {
-  .list_footer {
-    padding: 1.5rem 0 1rem 0.5rem;
-  }
-}
-
-.checkbox {
-  position: relative;
-  user-select: none;
-  width: 100%;
-  display: block;
-  padding-left: 44px;
-  cursor: pointer;
-}
-.checkbox span {
-  display: block;
-  padding: 1rem 0;
-  border-bottom: 1px solid #eee;
-  line-height: 1.5;
-}
-@media (max-width: 575px) {
-  .checkbox span {
-    padding-right: 1rem;
-  }
-}
-.checkbox input {
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  cursor: pointer;
-  display: block;
-  height: 100%;
-  width: 100%;
-  margin: 0;
-}
-.checkbox span::before {
-  content: "";
-  position: absolute;
-  left: 0.5rem;
-  top: 50%;
-  transform: translateY(-50%) scale(1);
-  height: 20px;
-  width: 20px;
-  border-radius: 5px;
-  border: 1px solid #333;
-  pointer-events: none;
-  transition: 0.3s ease;
-}
-.checkbox span::after {
-  content: "";
-  position: absolute;
-  left: 14px;
-  top: 27%;
-  transform: rotate(45deg);
-  height: 15px;
-  width: 0.5rem;
-  border-radius: 1px;
-  border-bottom: 3px solid #ffd370;
-  border-right: 3px solid #ffd370;
-  pointer-events: none;
-  opacity: 0;
-  transition: 0.3s ease;
-}
-.checkbox input:checked ~ span {
-  color: #9f9a91;
-  text-decoration: line-through;
-}
-.checkbox input:checked ~ span::before {
-  border-color: transparent;
-  transform: translateY(-50%) scale(0);
-}
-.checkbox input:checked ~ span::after {
-  opacity: 1;
+.fa-caret-down {
+  top: 9px;
+  right: -15px;
 }
