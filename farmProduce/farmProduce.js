@@ -1,5 +1,3 @@
-//取得資料
-
 let data = []
 let showData = []
 let type = ''
@@ -26,8 +24,6 @@ const searchBtn = document.querySelector('.search')
 const sortSelect = document.querySelector('.sort-select')
 const sortAdvanced = document.querySelector('.js-sort-advanced')
 const sortBtn = document.querySelectorAll('.js-sort-advanced i')
-console.log(sortAdvanced.classList)
-console.log(sortBtn[0].classList)
 
 function render(showData) {
   let str = ''
@@ -49,16 +45,17 @@ function render(showData) {
 }
 
 buttonGroup.addEventListener('click',(e) => {
-  type = e.target.getAttribute('data-type') 
-  buttonGroups.forEach((i) => {
-    i.classList.remove('active')
-  })
-  e.target.classList.add('active')
-  console.log(e.target.classList)
-  showData = data.filter((i) => {
-    return i["種類代碼"] == e.target.getAttribute('data-type')
-  })
-  render(showData)
+  if(e.target.nodeName === 'BUTTON'){
+    type = e.target.getAttribute('data-type') 
+    buttonGroups.forEach((i) => {
+      i.classList.remove('active')
+    })
+    e.target.classList.add('active')
+    showData = data.filter((i) => {
+      return i["種類代碼"] == e.target.getAttribute('data-type')
+    })
+    render(showData)
+  }
 })
 
 searchBtn.addEventListener('click', (e) => {
@@ -80,17 +77,18 @@ sortSelect.addEventListener('change',(e) => {
 })
 
 sortAdvanced.addEventListener('click',(e) => {
-  upDown = e.target.getAttribute('data-sort')
-  sort = e.target.getAttribute('data-price')
-  sortBtn.forEach((i) => {
-    i.classList.remove('text-danger')
-  })
-  e.target.classList.add('text-danger')
-  sortData()
+  if(e.target.nodeName === 'I'){
+    upDown = e.target.getAttribute('data-sort')
+    sort = e.target.getAttribute('data-price')
+    sortBtn.forEach((i) => {
+      i.classList.remove('text-danger')
+    })
+    e.target.classList.add('text-danger')
+    sortData()
+  }
 })
 
 function sortData() {
-  console.log(showData.length)
   if (showData.length === 0) {
     showData = data
   }
@@ -101,6 +99,5 @@ function sortData() {
       return a[sort] - b[sort]
     }
   }) 
-  console.log(showData)
   render(showData)
 }
