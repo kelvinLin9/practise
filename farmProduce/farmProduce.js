@@ -66,7 +66,7 @@ searchBtn.addEventListener('click', (e) => {
 
 sortSelect.addEventListener('change',(e) => {
   sort = e.target.value
-  console.log(e.target)
+  // console.log(e.target.childNodes.getAttribute('data-sort')) 想辦法
 })
 
 sortAdvanced.addEventListener('click',(e) => {
