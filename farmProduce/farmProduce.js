@@ -58,8 +58,14 @@ buttonGroup.addEventListener('click',(e) => {
   }
 })
 
-searchBtn.addEventListener('click', (e) => {
-  if(searchInput.value.trim() ===  '') {
+searchBtn.addEventListener('click',search)
+searchInput.addEventListener('keyup', (e) => {
+  if(e.key == 'Enter'){
+    search()
+  }
+})
+function search(){
+    if(searchInput.value.trim() ===  '') {
     alert('請輸入作物名稱')
     return
   }
@@ -68,7 +74,8 @@ searchBtn.addEventListener('click', (e) => {
   })
   searchInput.value = ''
   render(showData)
-})
+}
+
 
 sortSelect.addEventListener('change',(e) => {
   sort = e.target.value
