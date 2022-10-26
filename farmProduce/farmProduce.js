@@ -90,8 +90,8 @@ sortAdvanced.addEventListener('click',(e) => {
 })
 
 function sortData() {
-  console.log(showData)
-  if (showData === []) {
+  console.log(showData.length)
+  if (showData.length === 0) {
     showData = data
   }
   showData.sort((a,b) => {
@@ -101,5 +101,6 @@ function sortData() {
       return a[sort] - b[sort]
     }
   }) 
+  console.log(showData)
   render(showData)
 }
