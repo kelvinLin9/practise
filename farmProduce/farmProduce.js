@@ -1,6 +1,9 @@
 //取得資料
 
 let data = [];
+let type = ''
+let sort = ''
+let upDown = ''
 
 function getData() {
   axios
@@ -19,7 +22,8 @@ const buttonGroup = document.querySelector('.button-group')
 const searchInput = document.querySelector('.rounded-end')
 const searchBtn = document.querySelector('.search')
 const sortSelect = document.querySelector('.sort-select')
-console.log(sortSelect)
+const sortAdvanced = document.querySelector('.js-sort-advanced')
+console.log(sortAdvanced)
 
 function render(showData) {
   let str = ''
@@ -40,7 +44,7 @@ function render(showData) {
 }
 
 buttonGroup.addEventListener('click',(e) => {
-  console.log(e.target.getAttribute('data-type'))
+  type = e.target.getAttribute('data-type') 
   showData = data.filter((i) => {
     return i["種類代碼"] == e.target.getAttribute('data-type')
   })
@@ -56,9 +60,25 @@ searchBtn.addEventListener('click', (e) => {
   showData = data.filter((i) => {
     return i["作物名稱"].match(searchInput.value.trim())
   })
+  searchInput.value = ''
   render(showData)
 })
 
-sortSelect.addEventListener('click',(e) => {
+sortSelect.addEventListener('change',(e) => {
+  sort = e.target.value
   console.log(e.target)
+})
+
+sortAdvanced.addEventListener('click',(e) => {
+  upDown = e.target.getAttribute('data-sort')
+  sort = e.target.getAttribute('data-price')
+  data.sort((a,b) => {
+    if(upDown === 'up'){
+      return b[sort] - a[sort]
+    } else if(upDown === 'down'){
+      return a[sort] - b[sort]
+    }
+
+  }) 
+  render(data)
 })
