@@ -16,6 +16,10 @@ getData();
 
 const showList = document.querySelector('.showList')
 const buttonGroup = document.querySelector('.button-group')
+const searchInput = document.querySelector('.rounded-end')
+const searchBtn = document.querySelector('.search')
+const sortSelect = document.querySelector('.sort-select')
+console.log(sortSelect)
 
 function render(showData) {
   let str = ''
@@ -42,4 +46,19 @@ buttonGroup.addEventListener('click',(e) => {
   })
   console.log(showData)
   render(showData)
+})
+
+searchBtn.addEventListener('click', (e) => {
+  if(searchInput.value.trim() ===  '') {
+    alert('請輸入作物名稱')
+    return
+  }
+  showData = data.filter((i) => {
+    return i["作物名稱"].match(searchInput.value.trim())
+  })
+  render(showData)
+})
+
+sortSelect.addEventListener('click',(e) => {
+  console.log(e.target)
 })

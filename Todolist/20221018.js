@@ -14,7 +14,7 @@ txt.addEventListener('keyup', (e) => {
   }
 })
 function addTodo() {
-  if (txt.value == ''){
+  if (txt.value.trim() === ''){
     alert('請輸入代辦事項')
     return
   }
