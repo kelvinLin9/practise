@@ -1,5 +1,6 @@
 let data = []
 let showData = []
+let searchName = ''
 let type = ''
 let sort = ''
 let upDown = ''
@@ -10,7 +11,7 @@ function getData() {
     .then((res) => {
       data = res.data.filter((i) => i["種類代碼"] && i["作物名稱"].trim())
       data = data.filter((i) => i["交易量"] !== 0)
-      render(data)
+      render(showData)
     });
 }
 getData();
@@ -27,26 +28,42 @@ const sortBtn = document.querySelectorAll('.js-sort-advanced i')
 
 function render(showData) {
   let str = ''
-  showData.forEach((item) => {
-    str += `
-    <tr>
-      <td>${item["作物名稱"]}</td>
-      <td>${item["市場名稱"]}</td>
-      <td>${item["上價"]}</td>
-      <td>${item["中價"]}</td>
-      <td>${item["下價"]}</td>
-      <td>${item["平均價"]}</td>
-      <td>${item["交易量"]}</td>
-    </tr>
+  if (showData.length === 0 && searchName === ''){
+    str = `
+    <td colspan="7" class="text-center p-3">
+      請輸入並搜尋想比價的作物名稱^＿^
+    </td>
     `
-  })
+  }else if(showData.length === 0 && searchName !== '') {
+    str = `
+    <td colspan="7" class="text-center p-3">
+      查詢不到當日交易資訊Ｑ＿Ｑ
+    </td>
+    `
+    showResult.innerHTML = `查看${searchName || type}的比價結果，共${showData.length}筆資料`
+  } else {
+    showData.forEach((item) => {
+      str += `
+      <tr>
+        <td>${item["作物名稱"]}</td>
+        <td>${item["市場名稱"]}</td>
+        <td>${item["上價"]}</td>
+        <td>${item["中價"]}</td>
+        <td>${item["下價"]}</td>
+        <td>${item["平均價"]}</td>
+        <td>${item["交易量"]}</td>
+      </tr>
+      `
+    })
+    showResult.innerHTML = `查看${searchName || type}的比價結果，共${showData.length}筆資料`
+  }
   showList.innerHTML = str
-  showResult.innerHTML = `共${showData.length}筆資料`
 }
 
 buttonGroup.addEventListener('click',(e) => {
+  // 避免點到其他地方
   if(e.target.nodeName === 'BUTTON'){
-    type = e.target.getAttribute('data-type') 
+    type = e.target.innerText
     buttonGroups.forEach((i) => {
       i.classList.remove('active')
     })
@@ -69,6 +86,7 @@ function search(){
     alert('請輸入作物名稱')
     return
   }
+  searchName = searchInput.value.trim()
   showData = data.filter((i) => {
     return i["作物名稱"].match(searchInput.value.trim())
   })
