@@ -113,5 +113,3 @@ tab.addEventListener('click', (e) =>{
   renderData(updateData)
 })
 
-
-
