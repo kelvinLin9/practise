@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="all.css">
+</head>
+<body>
+<!-- 畫面主要分為gate-left左邊與gate-right右邊元素，我們透過操作兩邊元素達到視差動畫效果 -->
+
+<section class="section3">
+  <div class="gate gate-left gate-left-1 z-20">
+    <i class="fa-solid fa-house"></i>
+  </div>
+  <div class="gate gate-right gate-right-1 z-20">
+    <h2>WEEK 1</h2>
+  </div>
+  <div class="gate gate-left gate-left-2 z-10">
+    <i class="fa-solid fa-cloud"></i>
+  </div>
+  <div class="gate gate-right gate-right-2 z-10">
+    <h2>WEEK 2</h2>
+  </div>
+  <div class="gate gate-left gate-left-3 z-0">
+    <i class="fa-solid fa-location-dot"></i>
+  </div>
+  <div class="gate gate-right gate-right-3 z-0">
+    <h2>WEEK 3</h2>
+  </div>
+  </section>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/TextPlugin.min.js"></script>
+  <script src="all.js"></script>
+</body>
+</html>

@@ -1,22 +1,20 @@
-const tl = gsap.timeline({
-  scrollTrigger: {
-    trigger: ".box1",
-    markers: true,
-    start: 'top 35%',
-    end: 'top 1%',
-    scrub: true,
-  },
-})
 
-tl.to('.box1', {
-  top: 0,
-  left: '50%',
-  xPercent: '-50',
-  // duration: 10,
-  position: 'absolute',
-}).to('.box1', {
-  top: '100%',
-  yPercent: '-100',
-  // duration: 20,
-  position: 'absolute',
-})
+// 文字範例
+gsap.to('.cursor', {opacity:0, duration:1, repeat: -1})
+
+// 方塊移動範例
+gsap.to('.box1', {x: 100, duration:1,})
+gsap.to('.box1', {y: 100, duration:1, delay:1})
+
+gsap.from('.box2', {x: 200, opacity:0 ,duration:1})
+
+// 方塊漸明範例
+gsap.fromTo('.box3', {autoAlpha: 0.3}, {autoAlpha: 1, duration: 1, repeat: -1})
+
+// timeline
+const timeline = gsap.timeline()
+timeline.to('.box4', {x: 100, duration:1}).to('.box4', {y: 100, duration:1}, "<")
+
+// timeline位置參數
+const timeline2 = gsap.timeline()
+timeline.to('.box5', {x: 100, duration:1}).to('.box6', {x: 100, duration:1}, "<")
