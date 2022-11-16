@@ -1,95 +1,171 @@
-const canvas = document.querySelector("#canvas");
-const ctx = canvas.getContext("2d");
-const clearBtn = document.querySelector(".clear");
+// const canvas = document.querySelector("#canvas");
+// const ctx = canvas.getContext("2d");
+// const clearBtn = document.querySelector(".clear");
 
-// 設定線條的相關數值
-ctx.lineWidth = 4;
-ctx.lineCap = "round";
+// // 設定線條的相關數值
+// ctx.lineWidth = 4;
+// ctx.lineCap = "round";
 
-// 設置狀態來確認滑鼠 / 手指是否按下或在畫布範圍中
-let isPainting = false;
+// // 設置狀態來確認滑鼠 / 手指是否按下或在畫布範圍中
+// let isPainting = false;
 
-// 取得滑鼠 / 手指在畫布上的位置
-function getPaintPosition(e) {
-  const canvasSize = canvas.getBoundingClientRect();
+// // 取得滑鼠 / 手指在畫布上的位置
+// function getPaintPosition(e) {
+//   const canvasSize = canvas.getBoundingClientRect();
 
-  if (e.type === "mousemove") {
-    return {
-      x: e.clientX - canvasSize.left,
-      y: e.clientY - canvasSize.top,
-    };
-  } else {
-    return {
-      x: e.touches[0].clientX - canvasSize.left,
-      y: e.touches[0].clientY - canvasSize.top,
-    };
-  }
+//   if (e.type === "mousemove") {
+//     return {
+//       x: e.clientX - canvasSize.left,
+//       y: e.clientY - canvasSize.top,
+//     };
+//   } else {
+//     return {
+//       x: e.touches[0].clientX - canvasSize.left,
+//       y: e.touches[0].clientY - canvasSize.top,
+//     };
+//   }
+// }
+
+// // 開始繪圖時，將狀態開啟
+// function startPosition(e) {
+//   e.preventDefault();
+//   isPainting = true;
+// }
+
+// // 結束繪圖時，將狀態關閉，並產生新路徑
+// function finishedPosition() {
+//   isPainting = false;
+//   ctx.beginPath();
+// }
+
+// // 繪圖過程
+// function draw(e) {
+//   // 滑鼠移動過程中，若非繪圖狀態，則跳出
+//   if (!isPainting) return;
+
+//   // 取得滑鼠 / 手指在畫布上的 x, y 軸位置位置
+//   const paintPosition = getPaintPosition(e);
+
+//   // 移動滑鼠位置並產生圖案
+//   ctx.lineTo(paintPosition.x, paintPosition.y);
+//   ctx.stroke();
+// }
+
+// // 重新設定畫布
+// function reset() {
+//   ctx.clearRect(0, 0, canvas.width, canvas.height);
+// }
+
+// // event listener 電腦板
+// canvas.addEventListener("mousedown", startPosition);
+// canvas.addEventListener("mouseup", finishedPosition);
+// canvas.addEventListener("mouseleave", finishedPosition);
+// canvas.addEventListener("mousemove", draw);
+
+// // event listener 手機板
+// canvas.addEventListener("touchstart", startPosition);
+// canvas.addEventListener("touchend", finishedPosition);
+// canvas.addEventListener("touchcancel", finishedPosition);
+// canvas.addEventListener("touchmove", draw);
+
+// clearBtn.addEventListener("click", reset);
+
+
+
+// //-----------------------
+
+
+// const showImage = document.querySelector(".show-img");
+// const saveBtn = document.querySelector(".save")
+// function saveImage() {
+//   // 圖片儲存的類型選擇 png ，並將值放入 img 的 src
+//   const newImg = canvas.toDataURL("image/png");
+//   showImage.src = newImg;
+// }
+
+// saveBtn.addEventListener("click", saveImage);
+
+
+// //-----------------------
+
+// function saveImage() {
+//   const newImg = canvas.toDataURL("image/png");
+//   showImage.src = newImg;
+//   localStorage.setItem('img', newImg)
+// }
+
+
+//-----------------------2.上傳pdf圖片並顯示
+
+const Base64Prefix = "data:application/pdf;base64,";
+const add = document.querySelector(".add");
+pdfjsLib.GlobalWorkerOptions.workerSrc = "https://mozilla.github.io/pdf.js/build/pdf.worker.js";
+
+// 使用原生 FileReader 轉檔
+function readBlob(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => resolve(reader.result));
+    reader.addEventListener("error", reject);
+    reader.readAsDataURL(blob);
+  });
 }
 
-// 開始繪圖時，將狀態開啟
-function startPosition(e) {
-  e.preventDefault();
-  isPainting = true;
+async function printPDF(pdfData) {
+
+  // 將檔案處理成 base64
+  pdfData = await readBlob(pdfData);
+
+  // 將 base64 中的前綴刪去，並進行解碼
+  const data = atob(pdfData.substring(Base64Prefix.length));
+
+  // 利用解碼的檔案，載入 PDF 檔及第一頁
+  const pdfDoc = await pdfjsLib.getDocument({ data }).promise;
+  const pdfPage = await pdfDoc.getPage(1);
+
+  // 設定尺寸及產生 canvas
+  const viewport = pdfPage.getViewport({ scale: window.devicePixelRatio });
+  const canvas = document.createElement("canvas");
+  const context = canvas.getContext("2d");
+
+  // 設定 PDF 所要顯示的寬高及渲染
+  canvas.height = viewport.height;
+  canvas.width = viewport.width;
+  const renderContext = {
+    canvasContext: context,
+    viewport,
+  };
+  const renderTask = pdfPage.render(renderContext);
+
+  // 回傳做好的 PDF canvas
+  return renderTask.promise.then(() => canvas);
 }
 
-// 結束繪圖時，將狀態關閉，並產生新路徑
-function finishedPosition() {
-  isPainting = false;
-  ctx.beginPath();
+async function pdfToImage(pdfData) {
+
+  // 設定 PDF 轉為圖片時的比例
+  const scale = 1 / window.devicePixelRatio;
+
+  // 回傳圖片
+  return new fabric.Image(pdfData, {
+    id: "renderPDF",
+    scaleX: scale,
+    scaleY: scale,
+  });
 }
 
-// 繪圖過程
-function draw(e) {
-  // 滑鼠移動過程中，若非繪圖狀態，則跳出
-  if (!isPainting) return;
+// 此處 canvas 套用 fabric.js
+const canvas = new fabric.Canvas("canvas");
 
-  // 取得滑鼠 / 手指在畫布上的 x, y 軸位置位置
-  const paintPosition = getPaintPosition(e);
+document.querySelector("input").addEventListener("change", async (e) => {
+  canvas.requestRenderAll();
+  const pdfData = await printPDF(e.target.files[0]);
+  const pdfImage = await pdfToImage(pdfData);
 
-  // 移動滑鼠位置並產生圖案
-  ctx.lineTo(paintPosition.x, paintPosition.y);
-  ctx.stroke();
-}
+  // 透過比例設定 canvas 尺寸
+  canvas.setWidth(pdfImage.width / window.devicePixelRatio);
+  canvas.setHeight(pdfImage.height / window.devicePixelRatio);
 
-// 重新設定畫布
-function reset() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
-
-// event listener 電腦板
-canvas.addEventListener("mousedown", startPosition);
-canvas.addEventListener("mouseup", finishedPosition);
-canvas.addEventListener("mouseleave", finishedPosition);
-canvas.addEventListener("mousemove", draw);
-
-// event listener 手機板
-canvas.addEventListener("touchstart", startPosition);
-canvas.addEventListener("touchend", finishedPosition);
-canvas.addEventListener("touchcancel", finishedPosition);
-canvas.addEventListener("touchmove", draw);
-
-clearBtn.addEventListener("click", reset);
-
-
-
-//-----------------------
-
-
-const showImage = document.querySelector(".show-img");
-const saveBtn = document.querySelector(".save")
-function saveImage() {
-  // 圖片儲存的類型選擇 png ，並將值放入 img 的 src
-  const newImg = canvas.toDataURL("image/png");
-  showImage.src = newImg;
-}
-
-saveBtn.addEventListener("click", saveImage);
-
-
-//-----------------------
-
-function saveImage() {
-  const newImg = canvas.toDataURL("image/png");
-  showImage.src = newImg;
-  localStorage.setItem('img', newImg)
-}
+  // 將 PDF 畫面設定為背景
+  canvas.setBackgroundImage(pdfImage, canvas.renderAll.bind(canvas));
+});
