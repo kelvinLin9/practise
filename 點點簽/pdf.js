@@ -14,15 +14,15 @@ function readBlob(blob) {
 
 async function printPDF(pdfData) {
   // 將檔案處理成 base64
-  console.log(pdfData)
+  // console.log(pdfData)
   pdfData = await readBlob(pdfData);
-  console.log(pdfData)
+  // console.log(pdfData)
   // 將 base64 中的前綴刪去，並進行解碼
   const data = atob(pdfData.substring(Base64Prefix.length));
-  console.log(data)
+  // console.log(data)
   // 利用解碼的檔案，載入 PDF 檔及第一頁
   const pdfDoc = await pdfjsLib.getDocument({ data }).promise;
-  console.log(pdfDoc)
+  // console.log(pdfDoc)
   const pdfPage = await pdfDoc.getPage(1);
   console.log(pdfPage)
   // 設定尺寸及產生 canvas
@@ -57,10 +57,9 @@ async function pdfToImage(pdfData) {
 }
 
 // 此處 canvas 套用 fabric.js
-const canvas = new fabric.Canvas("canvas");
-
+const canvas = new fabric.Canvas("canvass");
+console.log(canvas)
 document.querySelector("input").addEventListener("change", async (e) => {
-  console.groupCollapsed(e)
   canvas.requestRenderAll();
   const pdfData = await printPDF(e.target.files[0]);
   const pdfImage = await pdfToImage(pdfData);
@@ -72,3 +71,12 @@ document.querySelector("input").addEventListener("change", async (e) => {
   // 將 PDF 畫面設定為背景
   canvas.setBackgroundImage(pdfImage, canvas.renderAll.bind(canvas));
 });
+
+// 測試背景
+// const canvas = new fabric.Canvas("canvas");
+// canvas.setBackgroundImage('http://fabricjs.com/assets/honey_im_subtle.png',function(){
+//     canvas.renderAll();
+//   },{
+//     width:canvas.width,
+//     height:canvas.height
+//   });
