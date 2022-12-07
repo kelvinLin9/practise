@@ -24,10 +24,13 @@ async function printPDF(pdfData) {
   const pdfDoc = await pdfjsLib.getDocument({ data }).promise;
   // console.log(pdfDoc)
   const pdfPage = await pdfDoc.getPage(1);
-  console.log(pdfPage)
+  // console.log(pdfPage)
   // 設定尺寸及產生 canvas
   const viewport = pdfPage.getViewport({ scale: window.devicePixelRatio });
+  // 為什麼一定要新作一個
   const canvas = document.createElement("canvas");
+  // const canvas = document.querySelector("#canvass");
+  console.log(canvas)
   const context = canvas.getContext("2d");
 
   // 設定 PDF 所要顯示的寬高及渲染
