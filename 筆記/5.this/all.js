@@ -6,3 +6,5 @@ function qq () {
 }
 
 qq()
+
+console.log(x)
