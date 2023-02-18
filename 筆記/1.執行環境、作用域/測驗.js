@@ -15,7 +15,21 @@
 // console.log(a);
 
 
-'' = true;
-true = '';
-null = '';
-123 = ture;
+// '' = true;
+// true = '';
+// null = '';
+// 123 = ture;
+
+function a() {
+  b();
+}
+
+function b() {
+  c();
+}
+
+function c() {
+  console.log('Kelvin');
+}
+
+a();
