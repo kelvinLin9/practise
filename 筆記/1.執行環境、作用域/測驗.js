@@ -20,16 +20,17 @@
 // null = '';
 // 123 = ture;
 
-function a() {
-  b();
-}
+// function a() {
+//   b();
+// }
 
-function b() {
-  c();
-}
+// function b() {
+//   c();
+// }
 
-function c() {
-  console.log('Kelvin');
-}
+// function c() {
+//   console.log('Kelvin');
+// }
 
-a();
+// a();
+
