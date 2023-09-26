@@ -1,16 +1,76 @@
-function promiseCook(foodName , time) {
-  return new Promise(function(resolve, reject) { 
-    setTimeout(() => {
-      if (time >= 3 && time <= 5) {
+// function promiseCook(foodName , time) {
+//   return new Promise((resolve, reject) => { 
+//     setTimeout(() => {
+//       if (time >= 3 && time <= 5) {
+//         resolve(`${foodName}泡了${time}分鐘，好吃`)
+//       } else {
+//         reject(`${foodName}泡了${time}分鐘，難吃`)
+//       }
+//     },time*1000)
+//     // console.log(time)
+//   })
+// }
+
+// 練習可刪
+function promiseCook (foodName , time) {
+  return new Promise ((resolve, reject) => {
+    setTimeout (() => {
+      if (time >=3 && time <= 5) {
+        // resolve (`${好好吃捏}`)
         resolve(`${foodName}泡了${time}分鐘，好吃`)
       } else {
-        reject(`${foodName}泡了${time}分鐘，難吃`)
+        reject(`${foodName}泡了${time}分鐘，難吃💩`)
       }
-    },time*1000)
-    // console.log(time)
+    }, time*1000)
   })
 }
 
+// async function ee () {
+//     const res1 = await promiseCook ('e1' , 3)
+//     console.log(res1)
+//     const res2 = await promiseCook ('e2' , 5)
+//     console.log(res2)
+//     const res3 = await promiseCook ('e3' , 1)
+//     console.log(res3)
+// }
+
+// ee()
+
+// const catchError = (fn) => {
+//   return fn.catch((err) => {
+//     console.log(err)
+//   })
+// }
+
+// catchError(ee())
+
+
+async function asyncFn(foodName , time) {
+  const res = await promiseCook(foodName , time);
+  console.log(res);
+  }
+// catch 部分拉出來寫
+const catchError = (fn) => {
+  return fn.catch((err) => {
+    console.log(err);
+  })
+}
+
+catchError(asyncFn('來一客' , 3))
+catchError(asyncFn('來兩客' , 2))
+catchError(asyncFn('來三客' , 5))
+
+
+
+
+
+
+
+
+
+
+
+// ------
 // const cookTime = parseInt(Math.random() * 7) // 隨機帶入分鐘
 
 // promiseCook('來一客' , cookTime)
@@ -20,21 +80,6 @@ function promiseCook(foodName , time) {
 //   .catch((err) => {
 //     console.log(err)
 //   })
-
-
-// 鏈接不同promise
-// promiseCook('來一客' , 3)
-//   .then((res) => {
-//     console.log(res)
-//     return promiseCook('來兩客' , 2) // 這個階段會進入 catch
-//   })
-  // .then((res) => {
-  //   console.log(res)
-  //   return promiseCook('來三客' , 5) // 由於上一個階段結果是 reject，所以此段不執行
-  // })
-  // .catch((err) => {
-  //   console.log(err)
-  // })
 
 
   // 改寫
@@ -60,14 +105,15 @@ function promiseCook(foodName , time) {
   // async function asyncFn() {
   //   try {
   //     const res1 = await promiseCook('來一客' , 3);
-  //     console.log(res1); // resolve
+  //     console.log(res1);
   //     const res2 = await promiseCook('來兩客' , 2);
-  //     console.log(res2); // resolve
+  //     console.log(res2); 
+  //     const res3 = await promiseCook('來兩客' , 4);
+  //     console.log(res3); 
   //   } catch(err) {
   //     console.log(err)
   //   }
   // }
-  // console.log(asyncFn())
   // asyncFn();
   // console.log(asyncFn)
 
@@ -82,7 +128,6 @@ function promiseCook(foodName , time) {
   //     console.log(err)
   //   }
   // }
-  
   // console.log(asyncFn()) 
 
 
@@ -106,10 +151,10 @@ function promiseCook(foodName , time) {
   // async function asyncFnAll() {
   //   try {
   //     const res = await Promise.all([ promiseCook('來一客' , 3),
-  //     promiseCook('雙響砲' , 2),
+  //     promiseCook('雙響砲' , 4),
   //     promiseCook('滿漢大餐' , 5)
   //   ])
-  //     console.log(res); // resolve
+  //     console.log(res);
   //   } catch(err) {
   //     console.log(err)
   //   }
@@ -275,33 +320,33 @@ function promiseCook(foodName , time) {
 
 
 // ray 助教的範例 (先拿自己的改看看吧)
-function promiseFn (boolean) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if(boolean) {
-        resolve('resolve');
-      } else {
-        reject('reject')
-      }
-    }, 1000)
-  })
-}
+// function promiseFn (boolean) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       if(boolean) {
+//         resolve('resolve');
+//       } else {
+//         reject('reject')
+//       }
+//     }, 1000)
+//   })
+// }
 
-const catchError = (asFn) => {
-  return (n) => {
-    console.log('catchError參數', n)
-    return asFn(n).catch((error) => {
-      console.log('error:', error);
-    })
-  }
-}
+// const catchError = (asFn) => {
+//   return (n) => {
+//     console.log('catchError參數', n)
+//     return asFn(n).catch((error) => {
+//       console.log('error:', error);
+//     })
+//   }
+// }
 
-const asyncFn = async (n) => {
-  const res = await promiseFn(n)
-  console.log(res)
-}
+// const asyncFn = async (n) => {
+//   const res = await promiseFn(n)
+//   console.log(res)
+// }
 
-catchError(asyncFn)(0)
+// catchError(asyncFn)(0)
 
 
 // [1, 2].forEach(catchError(async (n) => {
