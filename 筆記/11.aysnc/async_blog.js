@@ -11,6 +11,7 @@
 //   })
 // }
 
+
 // 練習可刪
 function promiseCook (foodName , time) {
   return new Promise ((resolve, reject) => {
@@ -50,15 +51,32 @@ async function asyncFn(foodName , time) {
   console.log(res);
   }
 // catch 部分拉出來寫
-const catchError = (fn) => {
-  return fn.catch((err) => {
-    console.log(err);
-  })
+// const catchError = (fn) => {
+//   return fn.catch((err) => {
+//     console.log(err);
+//   })
+// }
+
+// catchError(asyncFn('來一客' , 3))
+// catchError(asyncFn('來兩客' , 2))
+// catchError(asyncFn('來三客' , 5))
+
+
+const catchError = (asFn) => {
+  return (n) => {
+    return asFn(n).catch((error) => {
+      console.log('error', error);
+    })
+  }
 }
 
-catchError(asyncFn('來一客' , 3))
-catchError(asyncFn('來兩客' , 2))
-catchError(asyncFn('來三客' , 5))
+const a = [{name:'來一客' , min:3}, {name:'來兩客' , min:2}, {name:'來三客' , min:5}]
+a.forEach((i) => {
+  catchError(asyncFn(i.name , i.time))
+})
+
+
+
 
 
 
