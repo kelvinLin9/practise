@@ -111,3 +111,25 @@ result.then(res => {
 }, err => {
   console.log('rejected', err); // 只有此段會出現結果
 });
+
+
+
+let obj = {
+    title: '錢錢',
+    amounts: 66666,
+}
+let objNew = {};
+// objNew = obj;
+// objNew = {...obj};
+objNew = Object.assign(objNew, obj)
+objNew.amounts = 123;
+
+
+console.log(obj)
+console.log(objNew)
+console.log(obj.amounts); // 輸出結果為何？
+// console.log(obj === objNew); // 輸出結果為 true 還是 false？ // t
+
+// objNew = {...obj};
+// objNew = Object.assign(objNew, obj)
+// console.log(obj === objNew);
